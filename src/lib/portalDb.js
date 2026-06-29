@@ -54,7 +54,7 @@ export async function seedAdminUser() {
 // Register candidate user
 export async function createUser({ name, email, password, role, city, phone }) {
   const q = query(collection(db, "portal_users"), where("email", "==", email));
-  const querySnapshot = await getDocs(q);
+  const querySnapshot = await withTimeout(getDocs(q), 5000);
   if (!querySnapshot.empty) {
     throw new Error("Email is already registered");
   }
@@ -80,7 +80,7 @@ export async function createUser({ name, email, password, role, city, phone }) {
 // Login user (candidate or admin)
 export async function loginUser({ email, password }) {
   const q = query(collection(db, "portal_users"), where("email", "==", email));
-  const querySnapshot = await getDocs(q);
+  const querySnapshot = await withTimeout(getDocs(q), 5000);
   
   if (querySnapshot.empty) {
     return null;
@@ -415,3 +415,11 @@ export async function deleteLead(leadId) {
   const leadDocRef = doc(db, "portal_leads", leadId);
   await deleteDoc(leadDocRef);
 }
+
+// Wrapper for timeouts
+const withTimeout = (promise, ms) => {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => setTimeout(() => reject(new Error('Firebase connection timed out. Please check if the Firestore Database was actually created in your Firebase Console.')), ms))
+  ]);
+};
