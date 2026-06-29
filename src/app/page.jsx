@@ -251,7 +251,7 @@ export default function LandingPage() {
           <span>© {new Date().getFullYear()} ProgVision Digital. All Rights Reserved.</span>
         </div>
         <div className="flex items-center gap-4">
-          <span className="flex items-center gap-1.5"><ShieldCheck size={14} className="text-green-500" /> MSME Registered Enterprise (UDYAM-AP-23-0076992)</span>
+          <span className="flex items-center gap-1.5"><ShieldCheck size={14} className="text-green-500" /> MSME Registered Enterprise</span>
           <span className="hidden sm:inline">|</span>
           <span>support@progvision.online</span>
         </div>
