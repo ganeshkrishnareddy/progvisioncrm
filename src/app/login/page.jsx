@@ -115,7 +115,7 @@ export default function LoginPage() {
         {/* Footer info */}
         <div className="text-[10px] font-mono text-slate-500 flex items-center gap-2">
           <ShieldCheck size={14} className="text-green-500" />
-          <span>MSME Registered | Ministry of MSME, Govt of India</span>
+          <span>MSME Registered (UDYAM-AP-23-0076992) | Ministry of MSME, Govt of India</span>
         </div>
       </div>
 
