@@ -68,7 +68,7 @@ const trainingData = [
     sections: [
       {
         title: "About ProgVision Digital",
-        content: "ProgVision Digital is an MSME-registered technology company (UDYAM-AP-23-0076992) founded with the mission of building secure, scalable digital products for businesses and startups globally. Headquartered in India with global operations spanning the USA, Europe, Asia, and Japan."
+        content: "ProgVision Digital is an MSME-registered technology company founded with the mission of building secure, scalable digital products for businesses and startups globally. Headquartered in India with global operations spanning the USA, Europe, Asia, and Japan."
       },
       {
         title: "Service Portfolio",
