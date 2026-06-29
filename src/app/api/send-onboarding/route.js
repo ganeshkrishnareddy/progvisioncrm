@@ -25,7 +25,7 @@ export async function POST(request) {
           <div style="background-color: #f8fafc; padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid #e2e8f0;">
             <h3 style="margin-top: 0; color: #1e293b;">Your Login Credentials</h3>
             <ul style="list-style: none; padding: 0;">
-              <li><strong>Portal Link:</strong> <a href="https://progvisioncrm.web.app/login">https://progvisioncrm.web.app/login</a></li>
+              <li><strong>Portal Link:</strong> <a href="https://progvisioncrm.vercel.app/login">https://progvisioncrm.vercel.app/login</a></li>
               <li><strong>Email:</strong> ${email}</li>
               <li><strong>Password:</strong> <code style="background-color: #e2e8f0; padding: 2px 6px; border-radius: 4px;">${password}</code></li>
             </ul>
@@ -44,7 +44,7 @@ export async function POST(request) {
           <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;" />
           <p style="margin: 0;">Best regards,</p>
           <p style="margin: 0; font-weight: bold;">The ProgVision Team</p>
-          <p style="margin: 0; font-size: 0.9em; color: #64748b;">support@progvision.online | <a href="https://progvisioncrm.web.app">www.progvision.online</a></p>
+          <p style="margin: 0; font-size: 0.9em; color: #64748b;">support@progvision.online | <a href="https://progvisioncrm.vercel.app">www.progvision.online</a></p>
         </div>
       `,
     });
