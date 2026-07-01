@@ -187,7 +187,7 @@ export async function getUserCheckins(userId) {
     where("userId", "==", userId)
   );
   const querySnapshot = await getDocs(q);
-  const list = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  const list = querySnapshot.docs.map(doc => applyDefaultCheckout({ id: doc.id, ...doc.data() }));
   // Sort client-side by timestamp descending
   list.sort((a, b) => (b.timestamp || "").localeCompare(a.timestamp || ""));
   return list;
@@ -311,7 +311,7 @@ export async function getAllUsers() {
 // Admin: Get all check-ins
 export async function getAllCheckins() {
   const querySnapshot = await getDocs(collection(db, "portal_checkins"));
-  const list = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  const list = querySnapshot.docs.map(doc => applyDefaultCheckout({ id: doc.id, ...doc.data() }));
   list.sort((a, b) => (b.timestamp || "").localeCompare(a.timestamp || ""));
   return list;
 }
@@ -429,4 +429,19 @@ export async function updateUserPassword(userId, newPassword) {
   const passwordHash = await hashPassword(newPassword);
   const userRef = doc(db, "portal_users", userId);
   await updateDoc(userRef, { passwordHash });
+}
+
+// Apply default 8-hour checkout to past checkins
+function applyDefaultCheckout(checkin) {
+  if (!checkin.checkoutTimestamp && checkin.timestamp) {
+    const todayStr = new Date().toISOString().split('T')[0];
+    const checkinDateStr = checkin.timestamp.split('T')[0];
+    if (checkinDateStr !== todayStr) {
+      const checkinTime = new Date(checkin.timestamp);
+      const checkoutTime = new Date(checkinTime.getTime() + 8 * 60 * 60 * 1000);
+      checkin.checkoutTimestamp = checkoutTime.toISOString();
+      checkin.durationMinutes = 8 * 60;
+    }
+  }
+  return checkin;
 }
