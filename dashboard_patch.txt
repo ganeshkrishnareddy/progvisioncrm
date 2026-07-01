@@ -1,0 +1,24 @@
+
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+    if (passwordForm.newPassword !== passwordForm.confirmPassword) {
+      showToast("Passwords do not match", "error");
+      return;
+    }
+    if (passwordForm.newPassword.length < 6) {
+      showToast("Password must be at least 6 characters", "error");
+      return;
+    }
+    setChangingPassword(true);
+    try {
+      await updateUserPassword(session.userId, passwordForm.newPassword);
+      showToast("Password updated successfully!", "success");
+      setPasswordForm({ newPassword: "", confirmPassword: "" });
+    } catch (err) {
+      console.error(err);
+      showToast("Failed to update password", "error");
+    } finally {
+      setChangingPassword(false);
+    }
+  };
+

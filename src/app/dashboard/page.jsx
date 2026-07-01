@@ -12,6 +12,7 @@ import {
   submitLead,
   getUserLeads,
   updateProfile,
+  updateUserPassword,
   requestEditAccess,
   getEditRequest,
   getAllLeads,
@@ -640,6 +641,10 @@ export default function CandidateDashboard() {
   const [activeTab, setActiveTab] = useState("Check-In");
   const [toast, setToast] = useState(null);
 
+  // States for Change Password
+  const [passwordForm, setPasswordForm] = useState({ newPassword: "", confirmPassword: "" });
+  const [changingPassword, setChangingPassword] = useState(false);
+
   // States for Check-in tab
   const [checkedInToday, setCheckedInToday] = useState(false);
   const [checkedOutToday, setCheckedOutToday] = useState(false);
@@ -778,6 +783,29 @@ export default function CandidateDashboard() {
     } catch (err) {
       console.error(err);
       showToast("Failed to fetch profile details", "error");
+    }
+  };
+
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+    if (passwordForm.newPassword !== passwordForm.confirmPassword) {
+      showToast("Passwords do not match", "error");
+      return;
+    }
+    if (passwordForm.newPassword.length < 6) {
+      showToast("Password must be at least 6 characters", "error");
+      return;
+    }
+    setChangingPassword(true);
+    try {
+      await updateUserPassword(session.userId, passwordForm.newPassword);
+      showToast("Password updated successfully!", "success");
+      setPasswordForm({ newPassword: "", confirmPassword: "" });
+    } catch (err) {
+      console.error(err);
+      showToast("Failed to update password", "error");
+    } finally {
+      setChangingPassword(false);
     }
   };
 
@@ -1965,8 +1993,37 @@ export default function CandidateDashboard() {
                     </button>
                   </div>
                 </form>
-
               </div>
+
+              {/* Change Password Section */}
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-md mt-6">
+                <div className="mb-6">
+                  <h3 className="text-xl font-black text-white">Change Password</h3>
+                  <p className="text-xs text-slate-400 mt-1">Update your login password from the temporary one provided.</p>
+                </div>
+                <form onSubmit={handleChangePassword} className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold uppercase tracking-wider text-slate-400">New Password</label>
+                      <input required type="password" minLength={6} className="w-full bg-white/10 border border-white/20 text-white rounded-xl px-4 py-3 text-sm focus:border-blue-500 outline-none" value={passwordForm.newPassword} onChange={(e) => setPasswordForm((prev) => ({ ...prev, newPassword: e.target.value }))} />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold uppercase tracking-wider text-slate-400">Confirm Password</label>
+                      <input required type="password" minLength={6} className="w-full bg-white/10 border border-white/20 text-white rounded-xl px-4 py-3 text-sm focus:border-blue-500 outline-none" value={passwordForm.confirmPassword} onChange={(e) => setPasswordForm((prev) => ({ ...prev, confirmPassword: e.target.value }))} />
+                    </div>
+                  </div>
+                  <div className="flex justify-end mt-4">
+                    <button
+                      type="submit"
+                      disabled={changingPassword}
+                      className="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
+                    >
+                      {changingPassword ? <Loader2 className="w-4 h-4 animate-spin" /> : "Update Password"}
+                    </button>
+                  </div>
+                </form>
+              </div>
+
             </div>
           )}
         </div>

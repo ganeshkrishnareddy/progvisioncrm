@@ -423,3 +423,10 @@ const withTimeout = (promise, ms) => {
     new Promise((_, reject) => setTimeout(() => reject(new Error('Firebase connection timed out. Please check if the Firestore Database was actually created in your Firebase Console.')), ms))
   ]);
 };
+
+// Update user password
+export async function updateUserPassword(userId, newPassword) {
+  const passwordHash = await hashPassword(newPassword);
+  const userRef = doc(db, "portal_users", userId);
+  await updateDoc(userRef, { passwordHash });
+}
