@@ -836,17 +836,14 @@ export default function CandidateDashboard() {
   const loadLeads = async (userId, userRole) => {
     try {
       setLoadingLeads(true);
-      const isLeadGen = userRole === "Lead Generation Specialist";
-      if (isLeadGen) {
-        const list = await getUserLeads(userId);
-        setLeadsList(list);
-      } else {
+      const isAdmin = userRole === "Admin";
+      if (isAdmin) {
         const list = await getAllLeads();
         setAllLeadsList(list);
-        
-        const ownList = await getUserLeads(userId);
-        setLeadsList(ownList);
       }
+      
+      const ownList = await getUserLeads(userId);
+      setLeadsList(ownList);
     } catch (err) {
       console.error(err);
     } finally {
@@ -1743,10 +1740,10 @@ export default function CandidateDashboard() {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                   <div>
                     <h3 className="text-lg font-bold">
-                      {profile.role === "Lead Generation Specialist" ? "Leads You Scraped" : "Shared Pipeline Leads"}
+                      {profile.role !== "Admin" ? "Your Pipeline Leads" : "Shared Pipeline Leads"}
                     </h3>
                     <p className="text-xs text-slate-400 mt-0.5">
-                      {profile.role === "Lead Generation Specialist" ? `${leadsList.length} leads logged` : `${allLeadsList.length} total shared leads in queue`}
+                      {profile.role !== "Admin" ? `${leadsList.length} leads logged` : `${allLeadsList.length} total shared leads in queue`}
                     </p>
                   </div>
 
@@ -1772,7 +1769,7 @@ export default function CandidateDashboard() {
                   <div className="py-12 flex justify-center">
                     <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
                   </div>
-                ) : (profile.role === "Lead Generation Specialist" ? filteredLeads : allLeadsList.filter(l => leadFilter === "All" || l.responseStatus === leadFilter)).length === 0 ? (
+                ) : (profile.role !== "Admin" ? filteredLeads : allLeadsList.filter(l => leadFilter === "All" || l.responseStatus === leadFilter)).length === 0 ? (
                   <div className="text-center py-12 border border-dashed border-white/5 rounded-xl">
                     <p className="text-slate-500 text-sm">No leads match this filter status.</p>
                   </div>
@@ -1790,8 +1787,8 @@ export default function CandidateDashboard() {
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-white/5">
-                        {(profile.role === "Lead Generation Specialist" ? filteredLeads : allLeadsList.filter(l => leadFilter === "All" || l.responseStatus === leadFilter)).map((lead) => {
-                          const isScraperRole = profile.role === "Lead Generation Specialist";
+                        {(profile.role !== "Admin" ? filteredLeads : allLeadsList.filter(l => leadFilter === "All" || l.responseStatus === leadFilter)).map((lead) => {
+                          const isScraperRole = profile.role !== "Admin";
                           return (
                             <tr key={lead.id} className="hover:bg-white/[0.01] transition-colors">
                               <td className="py-4 pr-4 font-bold text-white max-w-[150px] truncate">{lead.clientName}</td>
