@@ -35,11 +35,23 @@ export async function POST(request) {
           <h3>Your First Steps</h3>
           <ol>
             <li><strong>Log into the Portal:</strong> Use the link and credentials above.</li>
-            <li><strong>Complete Your Profile (Required):</strong> Before you can access the main dashboard, you must complete your profile to 100%. This includes entering your identity documents, educational background, and bank account details for smooth compensation payouts.</li>
+            <li><strong>Complete Your Profile (Required):</strong> Before you can access the main dashboard, you must complete your profile to 100%.</li>
+            <li>
+              <strong>Document Submission via Google Drive:</strong> Please upload the following documents into a single Google Drive folder and share the link with us (make sure access is set to "Anyone with the link can view"):
+              <ul style="margin-top: 4px; margin-bottom: 4px;">
+                <li>All Government IDs (Aadhar Card and PAN Card)</li>
+                <li>10th Marksheet</li>
+                <li>12th Marksheet</li>
+                <li>Degree Certificate</li>
+                <li>Previous Experience Letters (if any)</li>
+                <li>No Objection Certificate (NOC) (if currently working)</li>
+                <li>Notice Period Details (if currently working)</li>
+              </ul>
+            </li>
             <li><strong>Start Training (Day 1):</strong> Once your profile is complete, head over to the "My Role & Training" tab. Your Day 1 module will be unlocked immediately!</li>
           </ol>
 
-          <p>If you have any questions, encounter any issues with the portal, or need help with your profile, please don't hesitate to reply directly to this email.</p>
+          <p>If you have any questions, encounter any issues with the portal, or need help with your profile, please don't hesitate to reply directly to this email with your Google Drive link.</p>
           
           <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;" />
           <p style="margin: 0;">Best regards,</p>
