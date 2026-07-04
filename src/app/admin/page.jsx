@@ -160,7 +160,7 @@ export default function AdminDashboard() {
     e.preventDefault();
     setCreateError("");
     
-    if (!createForm.name.trim() || !createForm.email.trim() || !createForm.password.trim() || !createForm.phone.trim() || !createForm.city.trim()) {
+    if (!createForm.name.trim() || !createForm.email.trim() || !createForm.password.trim() || !createForm.phone.trim()) {
       setCreateError("All fields are required");
       return;
     }
@@ -1053,21 +1053,7 @@ export default function AdminDashboard() {
                 </div>
               </div>
 
-              {/* City */}
-              <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-widest text-slate-400">Assigned City</label>
-                <div className="relative">
-                  <MapPin className="absolute left-3.5 top-3 text-slate-400 w-4 h-4" />
-                  <input
-                    type="text"
-                    required
-                    className="w-full bg-white/10 border border-white/20 text-white placeholder-slate-500 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 transition-colors"
-                    placeholder="e.g. Hyderabad"
-                    value={createForm.city}
-                    onChange={(e) => setCreateForm(prev => ({ ...prev, city: e.target.value }))}
-                  />
-                </div>
-              </div>
+
 
               {/* Job Role Dropdown */}
               <div className="space-y-1">
