@@ -929,6 +929,7 @@ export default function CandidateDashboard() {
   const postToGoogleForm = (leadData, sessionData) => {
     const FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLScF3dqnv0B-8KYLN1F-9o7K4kCT4DX_02uVzCG80rhzGRNHBQ/formResponse";
     const formBody = new URLSearchParams({
+      "entry.1756220816": sessionData?.name || "",
       "entry.299551197": leadData.clientName || "",
       "entry.580246169": leadData.contactPerson || "",
       "entry.1003037636": leadData.responseStatus || "Not Contacted",
@@ -1641,7 +1642,18 @@ export default function CandidateDashboard() {
                 </h3>
 
                 <form onSubmit={handleLeadSubmit} className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    {/* Employee Name */}
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold uppercase tracking-wider text-slate-400">Employee Name</label>
+                      <input
+                        type="text"
+                        disabled
+                        className="w-full bg-white/5 border border-white/10 text-slate-400 rounded-xl px-4 py-3 cursor-not-allowed text-sm font-semibold"
+                        value={profile?.name || ""}
+                      />
+                    </div>
+
                     {/* Business Name */}
                     <div className="space-y-1.5">
                       <label className="text-xs font-bold uppercase tracking-wider text-slate-400">Client / Business Name *</label>
