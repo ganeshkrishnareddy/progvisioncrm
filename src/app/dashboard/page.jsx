@@ -1625,7 +1625,7 @@ export default function CandidateDashboard() {
                   </p>
                 </div>
                 <a
-                  href="https://forms.gle/66gQSVbov9rPV4d4A"
+                  href={`https://docs.google.com/forms/d/e/1FAIpQLScF3dqnv0B-8KYLN1F-9o7K4kCT4DX_02uVzCG80rhzGRNHBQ/viewform?entry.1756220816=${encodeURIComponent(profile?.name || "")}&entry.128714681=${encodeURIComponent(profile?.email || "")}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs uppercase tracking-wider transition-all shadow-md shadow-blue-500/15 flex items-center gap-2 cursor-pointer shrink-0"
