@@ -492,31 +492,32 @@ export default function AdminDashboard() {
                       );
 
                       return (
-                        <tr key={user.userId} className="hover:bg-white/[0.005]">
-                          <td colSpan={6} className="p-0">
-                            <div className="flex items-center justify-between py-4 hover:bg-white/[0.01] px-2 transition-colors">
-                              <div className="pr-4 font-bold text-white max-w-[150px] sm:max-w-xs truncate">
-                                <span className="block">{user.name}</span>
-                                <span className="block text-xs text-slate-500 font-mono font-normal mt-0.5 truncate">{user.email}</span>
-                              </div>
-                              <div className="px-4 text-slate-300 w-[180px] truncate">{user.role}</div>
-                              <div className="px-4 text-slate-300">{user.city}</div>
-                              <div className="px-4 text-center font-mono font-bold text-orange-400">{userLeads.length}</div>
-                              <div className="px-4 text-center font-mono text-blue-400">{userCheckins.length}</div>
-                              <div className="pl-4 text-right">
-                                <button
-                                  onClick={() => toggleExpandCandidate(user.userId)}
-                                  className="px-3.5 py-2 bg-white/5 border border-white/10 hover:bg-blue-600/20 hover:border-blue-500/30 text-xs font-semibold rounded-lg flex items-center gap-1.5 ml-auto transition-all cursor-pointer"
-                                >
-                                  Details
-                                  {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-                                </button>
-                              </div>
-                            </div>
+                        <React.Fragment key={user.userId}>
+                          <tr className="hover:bg-white/[0.005] border-b border-white/5 transition-colors">
+                            <td className="py-4 pr-4 font-bold text-white max-w-[150px] sm:max-w-xs truncate">
+                              <span className="block">{user.name}</span>
+                              <span className="block text-xs text-slate-500 font-mono font-normal mt-0.5 truncate">{user.email}</span>
+                            </td>
+                            <td className="py-4 px-4 text-slate-300 max-w-[180px] truncate">{user.role}</td>
+                            <td className="py-4 px-4 text-slate-300 truncate">{user.city}</td>
+                            <td className="py-4 px-4 text-center font-mono font-bold text-orange-400">{userLeads.length}</td>
+                            <td className="py-4 px-4 text-center font-mono text-blue-400">{userCheckins.length}</td>
+                            <td className="py-4 pl-4 text-right">
+                              <button
+                                onClick={() => toggleExpandCandidate(user.userId)}
+                                className="px-3.5 py-2 bg-white/5 border border-white/10 hover:bg-blue-600/20 hover:border-blue-500/30 text-xs font-semibold rounded-lg flex items-center gap-1.5 ml-auto transition-all cursor-pointer"
+                              >
+                                Details
+                                {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                              </button>
+                            </td>
+                          </tr>
 
-                            {/* EXPANDABLE ACCORDION DETAIL PANEL */}
-                            {isExpanded && (
-                              <div className="bg-white/[0.02] border-x border-b border-white/10 rounded-xl p-5 mb-4 mx-2 text-white animate-fadeIn space-y-5">
+                          {/* EXPANDABLE ACCORDION DETAIL PANEL */}
+                          {isExpanded && (
+                            <tr className="bg-white/[0.01]">
+                              <td colSpan={6} className="p-0">
+                                <div className="bg-white/[0.02] border-x border-b border-white/10 rounded-xl p-5 mb-4 mx-2 text-white animate-fadeIn space-y-5">
                                 {/* Details Meta Summary & Direct Actions */}
                                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 bg-white/5 border border-white/5 rounded-xl text-xs">
                                   <div className="grid grid-cols-2 gap-x-6 gap-y-2">
@@ -719,9 +720,10 @@ export default function AdminDashboard() {
                                   )}
                                 </div>
                               </div>
-                            )}
-                          </td>
-                        </tr>
+                            </td>
+                          </tr>
+                        )}
+                      </React.Fragment>
                       );
                     })}
                   </tbody>
