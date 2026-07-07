@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { useRouter } from "next/navigation";
 import {
   Users,
@@ -492,7 +492,7 @@ export default function AdminDashboard() {
                       );
 
                       return (
-                        <React.Fragment key={user.userId}>
+                        <Fragment key={user.userId}>
                           <tr className="hover:bg-white/[0.005] border-b border-white/5 transition-colors">
                             <td className="py-4 pr-4 font-bold text-white max-w-[150px] sm:max-w-xs truncate">
                               <span className="block">{user.name}</span>
@@ -723,7 +723,7 @@ export default function AdminDashboard() {
                             </td>
                           </tr>
                         )}
-                      </React.Fragment>
+                      </Fragment>
                       );
                     })}
                   </tbody>
