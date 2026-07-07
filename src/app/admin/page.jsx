@@ -654,6 +654,9 @@ export default function AdminDashboard() {
                                       {/* Lead Summary count */}
                                       <div className="flex items-center gap-3">
                                         <span className="text-[10px] uppercase font-bold text-slate-500">Summary:</span>
+                                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-400 border border-blue-500/20">
+                                          {userLeads.filter(l => l.responseStatus === "Not Contacted").length} Not Contacted
+                                        </span>
                                         <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-green-500/20 text-green-400 border border-green-500/20">
                                           {userLeads.filter(l => l.responseStatus === "Interested").length} Interested
                                         </span>
@@ -693,6 +696,8 @@ export default function AdminDashboard() {
                                                         ? "bg-green-500/10 text-green-400 border-green-500/25"
                                                         : ld.responseStatus === "Maybe"
                                                         ? "bg-amber-500/10 text-amber-400 border-amber-500/25"
+                                                        : ld.responseStatus === "Not Contacted"
+                                                        ? "bg-blue-500/10 text-blue-400 border-blue-500/25"
                                                         : "bg-red-500/10 text-red-400 border-red-500/25"
                                                     }`}>
                                                       {ld.responseStatus}
@@ -740,6 +745,7 @@ export default function AdminDashboard() {
                   onChange={(e) => setLeadStatusFilter(e.target.value)}
                 >
                   <option value="All" className="bg-[#0B1220]">All Statuses</option>
+                  <option value="Not Contacted" className="bg-[#0B1220]">Not Contacted</option>
                   <option value="Interested" className="bg-[#0B1220]">Interested</option>
                   <option value="Maybe" className="bg-[#0B1220]">Maybe</option>
                   <option value="Not Interested" className="bg-[#0B1220]">Not Interested</option>
@@ -815,8 +821,10 @@ export default function AdminDashboard() {
                                 ? "bg-green-500/20 text-green-400 border-green-500/30"
                                 : lead.responseStatus === "Maybe"
                                 ? "bg-amber-500/20 text-amber-400 border-amber-500/30"
+                                : lead.responseStatus === "Not Contacted"
+                                ? "bg-blue-500/20 text-blue-400 border-blue-500/30"
                                 : "bg-red-500/20 text-red-400 border-red-500/30"
-                            }`}>{lead.responseStatus || "—"}</span>
+                            }`}>{lead.responseStatus || "Not Contacted"}</span>
                           </td>
                           <td className="py-3.5 px-3">
                             <div className="text-xs text-white font-medium">{lead.userName || "—"}</div>

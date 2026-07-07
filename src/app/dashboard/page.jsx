@@ -666,7 +666,7 @@ export default function CandidateDashboard() {
     clientName: "",
     contactPerson: "",
     phoneOrEmail: "",
-    responseStatus: "Interested",
+    responseStatus: "Not Contacted",
     comments: ""
   });
   const [submittingLead, setSubmittingLead] = useState(false);
@@ -675,7 +675,7 @@ export default function CandidateDashboard() {
   const [allLeadsList, setAllLeadsList] = useState([]);
   const [updatingLeadId, setUpdatingLeadId] = useState(null);
   const [responseForm, setResponseForm] = useState({
-    responseStatus: "Interested",
+    responseStatus: "Not Contacted",
     comments: ""
   });
   const [isResponseModalOpen, setIsResponseModalOpen] = useState(false);
@@ -931,7 +931,7 @@ export default function CandidateDashboard() {
     const formBody = new URLSearchParams({
       "entry.299551197": leadData.clientName || "",
       "entry.580246169": leadData.contactPerson || "",
-      "entry.1003037636": leadData.responseStatus || "Interested",
+      "entry.1003037636": leadData.responseStatus || "Not Contacted",
       "entry.36540988": "Other",
       "entry.1364959560": leadData.phoneOrEmail || "",
       "entry.128714681": sessionData?.email || "",
@@ -956,11 +956,11 @@ export default function CandidateDashboard() {
 
     setSubmittingLead(true);
     try {
-      // If Lead Gen Specialist (scraper), responseStatus defaults to "Maybe"
+      // If Lead Gen Specialist (scraper), responseStatus defaults to "Not Contacted"
       const isLeadGen = profile.role === "Lead Generation Specialist";
       const finalLeadData = {
         ...leadForm,
-        responseStatus: isLeadGen ? "Maybe" : leadForm.responseStatus
+        responseStatus: isLeadGen ? "Not Contacted" : leadForm.responseStatus
       };
 
       // Save to Firestore
@@ -974,7 +974,7 @@ export default function CandidateDashboard() {
         clientName: "",
         contactPerson: "",
         phoneOrEmail: "",
-        responseStatus: "Interested",
+        responseStatus: "Not Contacted",
         comments: ""
       });
       loadLeads(session.userId, profile.role);
@@ -997,7 +997,7 @@ export default function CandidateDashboard() {
       showToast("Client response updated successfully!");
       setIsResponseModalOpen(false);
       setUpdatingLeadId(null);
-      setResponseForm({ responseStatus: "Interested", comments: "" });
+      setResponseForm({ responseStatus: "Not Contacted", comments: "" });
       loadLeads(session.userId, profile.role);
     } catch (err) {
       console.error(err);
@@ -1693,6 +1693,7 @@ export default function CandidateDashboard() {
                             value={leadForm.responseStatus}
                             onChange={(e) => setLeadForm((prev) => ({ ...prev, responseStatus: e.target.value }))}
                           >
+                            <option value="Not Contacted" className="bg-[#0B1220] text-blue-400">Not Contacted</option>
                             <option value="Interested" className="bg-[#0B1220] text-green-400">Interested</option>
                             <option value="Maybe" className="bg-[#0B1220] text-amber-400">Maybe</option>
                             <option value="Not Interested" className="bg-[#0B1220] text-red-400">Not Interested</option>
@@ -1749,7 +1750,7 @@ export default function CandidateDashboard() {
 
                   {/* Filter pills */}
                   <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
-                    {["All", "Interested", "Maybe", "Not Interested"].map((pill) => (
+                    {["All", "Not Contacted", "Interested", "Maybe", "Not Interested"].map((pill) => (
                       <button
                         key={pill}
                         onClick={() => setLeadFilter(pill)}
@@ -1802,9 +1803,11 @@ export default function CandidateDashboard() {
                                     ? "bg-green-500/10 text-green-400 border-green-500/20"
                                     : lead.responseStatus === "Maybe"
                                     ? "bg-amber-500/10 text-amber-400 border-amber-500/20"
+                                    : lead.responseStatus === "Not Contacted"
+                                    ? "bg-blue-500/10 text-blue-400 border-blue-500/20"
                                     : "bg-red-500/10 text-red-400 border-red-500/20"
                                 }`}>
-                                  {lead.responseStatus}
+                                  {lead.responseStatus || "Not Contacted"}
                                 </span>
                               </td>
                               <td className="py-4 px-4 text-slate-400 max-w-[200px] truncate" title={lead.comments}>
@@ -1826,7 +1829,7 @@ export default function CandidateDashboard() {
                                     onClick={() => {
                                       setUpdatingLeadId(lead.id);
                                       setResponseForm({
-                                        responseStatus: lead.responseStatus || "Interested",
+                                        responseStatus: lead.responseStatus || "Not Contacted",
                                         comments: lead.comments || ""
                                       });
                                       setIsResponseModalOpen(true);
@@ -2059,6 +2062,7 @@ export default function CandidateDashboard() {
                     value={responseForm.responseStatus}
                     onChange={(e) => setResponseForm(prev => ({ ...prev, responseStatus: e.target.value }))}
                   >
+                    <option value="Not Contacted" className="bg-[#0B1220] text-blue-400">Not Contacted</option>
                     <option value="Interested" className="bg-[#0B1220] text-green-400">Interested</option>
                     <option value="Maybe" className="bg-[#0B1220] text-amber-400">Maybe</option>
                     <option value="Not Interested" className="bg-[#0B1220] text-red-400">Not Interested</option>
